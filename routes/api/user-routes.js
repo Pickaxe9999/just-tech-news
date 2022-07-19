@@ -49,7 +49,12 @@ router.post('/', (req, res) => {
 
 //PUT /api/users/1
 router.put('/:id', (req, res) => {
-    User.update(req.body, {where: {id: req.params.id}})
+    User.update(req.body, 
+            {
+                where: {id: req.params.id},
+                individualHooks: true
+            }
+        )
         .then(dbUserData => {
             if(!dbUserData[0]){
                 res.status(404).json({ message: 'No user found with this id' });
